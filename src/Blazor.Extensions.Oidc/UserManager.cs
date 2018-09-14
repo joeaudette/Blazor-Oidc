@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Blazor.Browser.Interop;
+﻿using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
 
@@ -17,7 +17,7 @@ namespace Authfix.Blazor.Extensions.Oidc
                 throw new ArgumentNullException(nameof(identityConfiguration));
             }
 
-            RegisteredFunction.Invoke<object>("Authfix.Blazor.Extensions.Oidc.Init", identityConfiguration);
+            JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.Init", new DotNetObjectRef(identityConfiguration));
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task ClearStaleState()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.ClearStaleState");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.ClearStaleState");
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns>If there is no authenticated user, return null. Else, return the current authenticated user</returns>
         public Task<IdentityUser> GetUser()
         {
-            return RegisteredFunction.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.GetUser");
+            return JSRuntime.Current.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.GetUser");
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Authfix.Blazor.Extensions.Oidc
                 throw new ArgumentNullException(nameof(userToStore));
             }
 
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.StoreUser", userToStore);
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.StoreUser", new DotNetObjectRef(userToStore));
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task RemoveUser()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.RemoveUser");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.RemoveUser");
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task<IdentityUser> SignInPopup()
         {
-            return RegisteredFunction.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInPopup");
+            return JSRuntime.Current.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInPopup");
         }
 
         /// <summary>
@@ -79,9 +79,9 @@ namespace Authfix.Blazor.Extensions.Oidc
         public Task SignInPopupCallback(string url = null)
         {
             if(string.IsNullOrEmpty(url))
-                return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInPopupCallback");
+                return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInPopupCallback");
 
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInPopupCallback", url);
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInPopupCallback", url);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task<IdentityUser> SignInSilent()
         {
-            return RegisteredFunction.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInSilent");
+            return JSRuntime.Current.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInSilent");
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace Authfix.Blazor.Extensions.Oidc
         public Task SignInSilentCallback(string url = null)
         {
             if(string.IsNullOrEmpty(url))
-                return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInSilentCallback");
+                return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInSilentCallback");
 
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInSilentCallback", url);
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInSilentCallback", new DotNetObjectRef(url));
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task SignInRedirect()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInRedirect");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignInRedirect");
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Authfix.Blazor.Extensions.Oidc
         public Task<IdentityUser> SignInRedirectCallback(string url = null)
         {
             if(string.IsNullOrEmpty(url))
-                return RegisteredFunction.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInRedirectCallback");
+                return JSRuntime.Current.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInRedirectCallback");
 
-            return RegisteredFunction.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInRedirectCallback", url);
+            return JSRuntime.Current.InvokeAsync<IdentityUser>("Authfix.Blazor.Extensions.Oidc.SignInRedirectCallback", new DotNetObjectRef(url));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task SignOutPopup()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignOutPopup");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignOutPopup");
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task SignOutPopupCallback(bool keepOpen = false, string url = null)
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignOutPopupCallback", url, keepOpen);
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.SignOutPopupCallback", new DotNetObjectRef(url), new DotNetObjectRef(keepOpen));
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task QuerySessionStatus()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.QuerySessionStatus");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.QuerySessionStatus");
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task RevokeAccessToken()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.RevokeAccessToken");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.RevokeAccessToken");
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task StartSilentRenew()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.StartSilentRenew");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.StartSilentRenew");
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Authfix.Blazor.Extensions.Oidc
         /// <returns></returns>
         public Task StopSilentRenew()
         {
-            return RegisteredFunction.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.StopSilentRenew");
+            return JSRuntime.Current.InvokeAsync<object>("Authfix.Blazor.Extensions.Oidc.StopSilentRenew");
         }
     }
 }
